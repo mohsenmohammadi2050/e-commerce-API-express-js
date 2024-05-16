@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Orders</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            crossorigin="anonymous"
+        />
+        <link
+            href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="/stylesheets/styles.css" />
+    </head>
+
+    <body>
+        <%- include('./partials/navbar.ejs', {user: user}) %>
+        <div class="container-fluid mt-5">
+            <% if (error) { %>
+                <h1 class="p-3 text-center"><%=error%></h1>
+            <% } else { %>
+            <h2 class="p-3 text-center">Orders</h2>
+            <div class="list-group">
+                <div class="row px-1 py-1 w-100">
+                    <span class="col py-1 bg-noroff text-center text-smaller"
+                        >Id</span
+                    >
+                    <span class="col py-1 bg-noroff text-center text-smaller"
+                        >OrderNumber</span
+                    >
+                    <span class="col py-1 bg-noroff text-center text-smaller"
+                        >Status</span
+                    >
+                    <span class="col py-1 bg-noroff text-center text-smaller"
+                        >UserId</span
+                    >
+                    <span class="col py-1 bg-noroff text-center text-smaller"
+                        >isDeleted</span
+                    >
+                    <span class="col py-1 bg-noroff text-center text-smaller"
+                        >Created_At</span
+                    >
+                    <span class="col py-1 bg-noroff text-center text-smaller"
+                        >Updated_At</span
+                    >
+                    <span class="col py-1 bg-noroff text-center text-smaller"
+                        >Options</span
+                    >
+                </div>
+
+                <% orders?.forEach(function(order) { %>
+                <div class="row px-1 py-1 w-100" id="<%=order.id%>">
+                    <span
+                        class="col px-0 text-center py-1 bg-light text-smaller border-start border-1"
+                    >
+                        <%=order.id%>
+                    </span>
+                    <span
+                        class="col py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                    >
+                        <%=order.orderNumber%>
+                    </span>
+                    <span
+                        id="status-order<%=order.id%>"
+                        class="col py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                    >
+                        <%=order.status%>
+                    </span>
+                    <span
+                        class="col py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                    >
+                        <%=order.userId%>
+                    </span>
+                    <span
+                        class="col py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                    >
+                        <%=order.isDeleted%>
+                    </span>
+                    <span
+                        class="col py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                    >
+                        <%=order.createdAt%>
+                    </span>
+                    <span
+                        class="col py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                    >
+                        <%=order.updatedAt%>
+                    </span>
+                    <span
+                        class="col bg-light px-0 text-center text-smaller border-start border-1"
+                    >
+                        <button
+                            id="btn-<%=order.id%>"
+                            onclick="showItems(this)"
+                            class="d-block m-auto"
+                        >
+                            <i title="see items" class="fa-solid fa-info"></i>
+                        </button>
+                        <button class="d-block m-auto" onclick="showUpdateOrderModal(this)">
+                            <i class="fa-solid fa-pen text-warning"></i>
+                        </button>
+                        <button onclick="deleteOrder(this)" class="d-block m-auto">
+                            <i class="fa-solid fa-trash text-danger"></i>
+                        </button>
+                    </span>
+
+                    <!-- Items -->
+                    <div class="d-none bg-success-subtle" id="items-<%=order.id%>">
+                        <h2 class="p-1 text-center">Items</h2>
+                        <div class="container-fluid mt-2">
+                            <div class="list-group">
+                                <div class="row px-1 py-1 w-100">
+                                    <span
+                                        class="col py-1 bg-noroff text-center text-smaller"
+                                        >Id</span
+                                    >
+                                    <span
+                                        class="col-2 py-1 bg-noroff text-center text-smaller"
+                                        >Name</span
+                                    >
+                                    <span
+                                        class="col py-1 bg-noroff text-center text-smaller"
+                                        >Quantity</span
+                                    >
+                                    <span
+                                        class="col py-1 bg-noroff text-center text-smaller"
+                                        >UnitPrice</span
+                                    >
+                                    <span
+                                        class="col py-1 bg-noroff text-center text-smaller"
+                                        >isPurchased</span
+                                    >
+                                    <span
+                                        class="col py-1 bg-noroff text-center text-smaller"
+                                        >IsDeleted</span
+                                    >
+                                    <span
+                                        class="col py-1 bg-noroff text-center text-smaller"
+                                        >Created_At</span
+                                    >
+                                    <span
+                                        class="col py-1 bg-noroff text-center text-smaller"
+                                        >Updated_At</span
+                                    >
+                                </div>
+
+                                <% order.items?.forEach(function(item) { %>
+                                <div class="row px-1 py-1 w-100">
+                                    <span
+                                        class="col px-0 text-center py-1 bg-light text-smaller border-start border-1"
+                                    >
+                                        <%=item.id%>
+                                    </span>
+                                    <span
+                                        class="col-2 py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                                    >
+                                        <%=item.name%>
+                                    </span>
+                                    <span
+                                        class="col py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                                    >
+                                        <%=item.quantity%>
+                                    </span>
+                                    <span
+                                        class="col py-1 px-0 text-center bg-light text-smaller border-start border-1"
+                                    >
+                                        <%=item.unitPrice%>
+                                    </span>
+                                    <span
+                                        class="col py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                                    >
+                                        <%=item.isPurchased%>
+                                    </span>
+                                    <span
+                                        class="col py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                                    >
+                                        <%=item.isDeleted%>
+                                    </span>
+                                    <span
+                                        class="col py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                                    >
+                                        <%=item.createdAt%>
+                                    </span>
+                                    <span
+                                        class="col py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                                    >
+                                        <%=item.updatedAt%>
+                                    </span>
+                                </div>
+                                <% }); %>
+                                <hr />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+                <hr />
+            </div>
+            <% } %>
+        </div>
+
+
+        <!-- Modal select status -->
+
+        <div class="modal fade" id="selectStatusModal" tabindex="-1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Change status of an order</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="statusNameSelect" class="col-form-label"
+                                    >status:</label
+                                >
+                                <select
+                                    id="statusNameSelect"
+                                    name="statusName"
+                                    class="form-select"
+                                >
+                                <% statuses?.forEach(function(status) { %>
+                                    <option value="<%=status.statusName%>">
+                                        <%=status.statusName%>
+                                    </option>
+                                    <% }); %>
+                                </select>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" onclick="updateOrder()" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- modal error -->
+        <div
+            class="modal fade"
+            id="errorModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="modalTitleId"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitleId"></h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="messageBody" class="container-fluid"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            id="closeErrorButton"
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+        <script src="/js/orders/orders.js"></script>
+        <script src="/js/logout/handleLogout.js"></script>
+    </body>
+</html>

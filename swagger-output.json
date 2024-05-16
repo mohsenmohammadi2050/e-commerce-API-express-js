@@ -1,0 +1,2640 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Exam Project",
+    "description": "Documentation Exam Project"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/users/user": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Returns credetials of the logged in user",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/user/update": {
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Change/updates credentials for a specific user. Only user!",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which must contain at least one of the following credentials:   newFirstName, newLastName, newEmail, newUserName, newPhoneNumber, newAddress, newPassword",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/user/delete": {
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Deletes a specific user. Only user",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/admin/allUsers": {
+      "get": {
+        "tags": [
+          "Users-Admin"
+        ],
+        "description": "Returns all users. Only admin has access.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/admin/allUsers/deleted": {
+      "get": {
+        "tags": [
+          "Users-Admin"
+        ],
+        "description": "Returns all deleted users. Only admin has access.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/admin/user/{id}": {
+      "get": {
+        "tags": [
+          "Users-Admin"
+        ],
+        "description": "Returns only one user. The returned user can be an admin or a user. Only admin has access.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/admin/updateAdmin": {
+      "put": {
+        "tags": [
+          "Users-Admin"
+        ],
+        "description": "Change/updates credentials for admin. Only admin!",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which must contain at least one of the following credentials:   newFirstName, newLastName, newEmail, newUserName, newPhoneNumber, newAddress, newPassword",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateAdmin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/admin/updateRole/{id}": {
+      "put": {
+        "tags": [
+          "Users-Admin"
+        ],
+        "description": "Change/updates role of a specific user for provided id in the url path. Only admin!",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which must contain a roleName field.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateUserRole"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/auth/admin/login": {
+      "post": {
+        "tags": [
+          "Auth-Admin"
+        ],
+        "description": "Login in to account. It will return a token, admin's id and admin's username",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which contains email and password, required to log in",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginAdmin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth-User"
+        ],
+        "description": "Login in to account. It will return a token, user's id and user's username",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which contains email and password, required to log in",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth-User"
+        ],
+        "description": "Sign up user",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which contains credentials such as fristName, lastName, username, email, password, address and phoneNumber, required to sign up",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SignupUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/roles/": {
+      "get": {
+        "tags": [
+          "Roles"
+        ],
+        "description": "Returns all roles. Only admin can view",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/roles/{id}": {
+      "get": {
+        "tags": [
+          "Roles"
+        ],
+        "description": "Returns one role which has an id equals to the provided id in the url path. Only admin can view",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/roles/create": {
+      "post": {
+        "tags": [
+          "Roles"
+        ],
+        "description": "Create a new role. Only admin has access.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which contains a roleName",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateRole"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/roles/update/{id}": {
+      "put": {
+        "tags": [
+          "Roles"
+        ],
+        "description": "Updates a role. id of the target role must be provided in the url path. Only admin has access",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which contains a field newName",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateRole"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/roles/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Roles"
+        ],
+        "description": "Deletes a specific role. Role's id must be provided in the url path. Only admin!",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/memberships/": {
+      "get": {
+        "tags": [
+          "Memberships"
+        ],
+        "description": "Returns all memberships. Only admin can view",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/memberships/{id}": {
+      "get": {
+        "tags": [
+          "Memberships"
+        ],
+        "description": "Returns one membership which has an id equals to the provided id in the url path. Only admin can view",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/memberships/create": {
+      "post": {
+        "tags": [
+          "Memberships"
+        ],
+        "description": "Create a new membership. Only admin has access.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which contains a membershipName and amount of discount",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateMembership"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/memberships/update/{id}": {
+      "put": {
+        "tags": [
+          "Memberships"
+        ],
+        "description": "Updates a membership. id of the target membership must be provided in the url path. Only admin has access",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which contains a field newName and a field newDiscount",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateMembership"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/memberships/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Memberships"
+        ],
+        "description": "Deletes a specific membership. membership's id must be provided in the url path. Only admin has access",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/init/": {
+      "post": {
+        "tags": [
+          "Init"
+        ],
+        "description": "Adds some dummy data into tables: brands, categories, products, roles, memeberships, statuses(status of orders) and users(only one admin user is added)",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/brands/": {
+      "get": {
+        "tags": [
+          "Brands"
+        ],
+        "description": "Returns all brands",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/brands/{id}": {
+      "get": {
+        "tags": [
+          "Brands"
+        ],
+        "description": "Returns one brand which has an id equals to the provided id in the url path.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/brands/create": {
+      "post": {
+        "tags": [
+          "Brands"
+        ],
+        "description": "Create a new brand. Only admin!!.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which contains a brandName",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateBrand"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/brands/update/{id}": {
+      "put": {
+        "tags": [
+          "Brands"
+        ],
+        "description": "Updates a brand. id of the target brand must be provided in the url path. Only admin has access",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which contains a field newName",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateBrand"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/brands/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Brands"
+        ],
+        "description": "Deletes a specific brand. Brand's id must be provided in the url path. Only admin!!",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/categories/": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "Returns all categories",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/categories/{id}": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "Returns one category which has an id equals to the provided id in the url path.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/categories/create": {
+      "post": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "Create a new category. Only admin!!.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which contains a categoryName",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateCategory"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/categories/update/{id}": {
+      "put": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "Updates a category. id of the target category must be provided in the url path. Only admin has access",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which contains a field newName",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateCategory"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/categories/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "Deletes a specific category. Category's id must be provided in the url path. Only admin",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Returns all the products",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Returns only one product for id provided in url path",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/create": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Adds a new product. Only admin user has access",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which contains credentials such as name, imgUrl, description, price, countInStock, brandName and categoryName.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateProduct"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/update/{id}": {
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Change/updates a specific product for provided id in the url path. Only admin!",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which must contain following credentials:   name, imgUrl, description, price, countInStock, brandName, categoryName.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateProduct"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/restore/{id}": {
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Restore a specific product for provided id in the url path. Only admin!",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Deletes a specific product for the provided id in url path. Only admin!",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/statuses/": {
+      "get": {
+        "tags": [
+          "Statuses"
+        ],
+        "description": "Returns all statuses. Only admin can view",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/statuses/{id}": {
+      "get": {
+        "tags": [
+          "Statuses"
+        ],
+        "description": "Returns one role which has an id equals to the provided id in the url path. Only admin can view",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/statuses/create": {
+      "post": {
+        "tags": [
+          "Statuses"
+        ],
+        "description": "Create a new status. Only admin has access.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which contains a statusName",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateStatus"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/statuses/update/{id}": {
+      "put": {
+        "tags": [
+          "Statuses"
+        ],
+        "description": "Updates a status. id of the target status must be provided in the url path. Only admin has access",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which contains a field newName",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateStatus"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/statuses/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Statuses"
+        ],
+        "description": "Deletes a specific status. status's id must be provided in the url path. Only admin!",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/checkout/now/veiwItems": {
+      "get": {
+        "tags": [
+          "UserCartItems"
+        ],
+        "description": "Returns all the cart items for a user. Only user has access",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/checkout/now/veiwItems/deleted": {
+      "get": {
+        "tags": [
+          "UserCartItems"
+        ],
+        "description": "Returns all the cart items which has been deleted by user. Only user has access",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/checkout/now/addItem": {
+      "post": {
+        "tags": [
+          "UserCartItems"
+        ],
+        "description": "Adds a new item to user's cart. Only user has access",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which contains credentials such as quantity and product id",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AddItemToCart"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/checkout/now/updateItem/{id}": {
+      "put": {
+        "tags": [
+          "UserCartItems"
+        ],
+        "description": "Updates only quantity of an item in user's cart. Item's id must be provided in url path. Only user!",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which contain newQuantity field",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateQuantityCartItem"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/checkout/now/deleteItem/{id}": {
+      "delete": {
+        "tags": [
+          "UserCartItems"
+        ],
+        "description": "Deletes a specific item for the provided id in url path. Only user itself!",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/checkout/now/purchasedItems": {
+      "get": {
+        "tags": [
+          "Items"
+        ],
+        "description": "Returns all purchased items. Only admin",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/checkout/now/deletedItems": {
+      "get": {
+        "tags": [
+          "Items"
+        ],
+        "description": "Returns all deleted items. Only admin",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/orders/user/checkout/{id}": {
+      "post": {
+        "tags": [
+          "Orders-User"
+        ],
+        "description": "Checks out a cart for a user. Only user has access",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/orders/user/all": {
+      "get": {
+        "tags": [
+          "Orders-User"
+        ],
+        "description": "Returns all the orders for a user. Only user has access.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/orders/user/{id}": {
+      "get": {
+        "tags": [
+          "Orders-User"
+        ],
+        "description": "Returns only one order for id provided in url path. Only user has access.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/orders/admin/all": {
+      "get": {
+        "tags": [
+          "Orders-Admin"
+        ],
+        "description": "Returns all the orders for all users. Only admin has access.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/orders/admin/update/{id}": {
+      "put": {
+        "tags": [
+          "Orders-Admin"
+        ],
+        "description": "Change/updates status of a specific order for provided id in the url path. Only admin!",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object which must contain statusName field.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateOrder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/orders/admin/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Orders-Admin"
+        ],
+        "description": "Deletes a specific order. The order must reach the 'Completed' status, otherwise can not be deleted. Order id must be provided in the url path. Only admin",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/search/": {
+      "post": {
+        "tags": [
+          "Search"
+        ],
+        "description": "A route to search products either by their name or category or brand. An empty query params will return all products.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "productName",
+            "in": "query",
+            "description": "Name of product",
+            "type": "string"
+          },
+          {
+            "name": "categoryName",
+            "in": "query",
+            "description": "Name of category",
+            "type": "string"
+          },
+          {
+            "name": "brandName",
+            "in": "query",
+            "description": "Name of brand",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/admin/auth/login": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "adminToken": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/admin/auth/logout": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/admin/products/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/admin/brands/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/admin/categories/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/admin/roles/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/admin/statuses/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/admin/memberships/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/admin/orders/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/admin/users/all": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/admin/users/all/deleted": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/admin/items/all": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/admin/items/all/deleted": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "LoginUser": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "Mohsen@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "0000"
+        }
+      },
+      "required": [
+        "email",
+        "password"
+      ]
+    },
+    "SignupUser": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "example": "Mohsen"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Mohammadi"
+        },
+        "username": {
+          "type": "string",
+          "example": "2050"
+        },
+        "email": {
+          "type": "string",
+          "example": "Mohsen@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "0000"
+        },
+        "address": {
+          "type": "string",
+          "example": "stavanger 4017"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "example": "344556"
+        }
+      },
+      "required": [
+        "firstName",
+        "lastName",
+        "username",
+        "email",
+        "password",
+        "address",
+        "phoneNumber"
+      ]
+    },
+    "LoginAdmin": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "admin@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "0000"
+        }
+      },
+      "required": [
+        "email",
+        "password"
+      ]
+    },
+    "CreateRole": {
+      "type": "object",
+      "properties": {
+        "roleName": {
+          "type": "string",
+          "example": "User"
+        }
+      },
+      "required": [
+        "roleName"
+      ]
+    },
+    "UpdateRole": {
+      "type": "object",
+      "properties": {
+        "newName": {
+          "type": "string",
+          "example": "Admin"
+        }
+      },
+      "required": [
+        "newName"
+      ]
+    },
+    "CreateMembership": {
+      "type": "object",
+      "properties": {
+        "membershipName": {
+          "type": "string",
+          "example": "Bronze"
+        },
+        "discount": {
+          "type": "number",
+          "example": 0
+        }
+      },
+      "required": [
+        "membershipName",
+        "discount"
+      ]
+    },
+    "UpdateMembership": {
+      "type": "object",
+      "properties": {
+        "newName": {
+          "type": "string",
+          "example": "Silver"
+        },
+        "newDiscount": {
+          "type": "number",
+          "example": 15
+        }
+      },
+      "required": [
+        "newName",
+        "newDiscount"
+      ]
+    },
+    "CreateBrand": {
+      "type": "object",
+      "properties": {
+        "brandName": {
+          "type": "string",
+          "example": "IPhone"
+        }
+      },
+      "required": [
+        "brandName"
+      ]
+    },
+    "UpdateBrand": {
+      "type": "object",
+      "properties": {
+        "newName": {
+          "type": "string",
+          "example": "Samsung"
+        }
+      },
+      "required": [
+        "newName"
+      ]
+    },
+    "CreateCategory": {
+      "type": "object",
+      "properties": {
+        "brandName": {
+          "type": "string",
+          "example": "Tv"
+        }
+      },
+      "required": [
+        "brandName"
+      ]
+    },
+    "UpdateCategory": {
+      "type": "object",
+      "properties": {
+        "newName": {
+          "type": "string",
+          "example": "Phone"
+        }
+      },
+      "required": [
+        "newName"
+      ]
+    },
+    "CreateProduct": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "test-product"
+        },
+        "imgUrl": {
+          "type": "string",
+          "example": "http://images.restapi.co.za/products/product-apple-tv.png"
+        },
+        "description": {
+          "type": "string",
+          "example": "a test product"
+        },
+        "price": {
+          "type": "number",
+          "example": 1200
+        },
+        "countInStock": {
+          "type": "number",
+          "example": 7
+        },
+        "brandName": {
+          "type": "string",
+          "example": "Apple"
+        },
+        "categoryName": {
+          "type": "string",
+          "example": "phones"
+        }
+      },
+      "required": [
+        "name",
+        "imgUrl",
+        "description",
+        "price",
+        "countInStock",
+        "brandName",
+        "categoryName"
+      ]
+    },
+    "UpdateProduct": {
+      "type": "object",
+      "properties": {
+        "newName": {
+          "type": "string",
+          "example": "new test-product"
+        },
+        "newImgUrl": {
+          "type": "string",
+          "example": "http://images.restapi.co.za/products/product-apple-tv.png"
+        },
+        "newDescription": {
+          "type": "string",
+          "example": "a new test product"
+        },
+        "newPrice": {
+          "type": "number",
+          "example": 2200
+        },
+        "newCountInStock": {
+          "type": "number",
+          "example": 8
+        },
+        "newBrandName": {
+          "type": "string",
+          "example": "Samsung"
+        },
+        "newCategoryName": {
+          "type": "string",
+          "example": "tablets"
+        }
+      },
+      "required": [
+        "newName",
+        "newImgUrl",
+        "newDescription",
+        "newPrice",
+        "newCountInStock",
+        "newBrandName",
+        "newCategoryName"
+      ]
+    },
+    "CreateStatus": {
+      "type": "object",
+      "properties": {
+        "statusName": {
+          "type": "string",
+          "example": "In-progress"
+        }
+      },
+      "required": [
+        "statusName"
+      ]
+    },
+    "UpdateStatus": {
+      "type": "object",
+      "properties": {
+        "newName": {
+          "type": "string",
+          "example": "Completed"
+        }
+      },
+      "required": [
+        "newName"
+      ]
+    },
+    "UpdateQuantityCartItem": {
+      "type": "object",
+      "properties": {
+        "newQuantity": {
+          "type": "number",
+          "example": 6
+        }
+      },
+      "required": [
+        "newQuantity"
+      ]
+    },
+    "AddItemToCart": {
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "type": "number",
+          "example": 10
+        },
+        "productId": {
+          "type": "number",
+          "example": 7
+        }
+      },
+      "required": [
+        "quantity",
+        "productId"
+      ]
+    },
+    "UpdateOrder": {
+      "type": "object",
+      "properties": {
+        "statusName": {
+          "type": "string",
+          "example": "Completed"
+        }
+      },
+      "required": [
+        "statusName"
+      ]
+    },
+    "UpdateUser": {
+      "type": "object",
+      "properties": {
+        "newFirstName": {
+          "type": "string",
+          "example": "test1"
+        },
+        "newLastName": {
+          "type": "string",
+          "example": "test"
+        },
+        "newEmail": {
+          "type": "string",
+          "example": "test@gmail.com"
+        },
+        "newUserName": {
+          "type": "string",
+          "example": "test-username"
+        },
+        "newPhoneNumber": {
+          "type": "string",
+          "example": "897664"
+        },
+        "newAdderss": {
+          "type": "string",
+          "example": "Stavanger"
+        },
+        "newPassword": {
+          "type": "string",
+          "example": "4321"
+        }
+      },
+      "required": [
+        "newFirstName",
+        "newLastName",
+        "newEmail",
+        "newUserName",
+        "newPhoneNumber",
+        "newAdderss",
+        "newPassword"
+      ]
+    },
+    "UpdateAdmin": {
+      "type": "object",
+      "properties": {
+        "newFirstName": {
+          "type": "string",
+          "example": "test1"
+        },
+        "newLastName": {
+          "type": "string",
+          "example": "test"
+        },
+        "newEmail": {
+          "type": "string",
+          "example": "test@gmail.com"
+        },
+        "newUserName": {
+          "type": "string",
+          "example": "test-username"
+        },
+        "newPhoneNumber": {
+          "type": "string",
+          "example": "897664"
+        },
+        "newAdderss": {
+          "type": "string",
+          "example": "Stavanger"
+        },
+        "newPassword": {
+          "type": "string",
+          "example": "4321"
+        }
+      },
+      "required": [
+        "newFirstName",
+        "newLastName",
+        "newEmail",
+        "newUserName",
+        "newPhoneNumber",
+        "newAdderss",
+        "newPassword"
+      ]
+    },
+    "UpdateUserRole": {
+      "type": "object",
+      "properties": {
+        "roleName": {
+          "type": "string",
+          "example": "Admin"
+        }
+      },
+      "required": [
+        "roleName"
+      ]
+    }
+  }
+}

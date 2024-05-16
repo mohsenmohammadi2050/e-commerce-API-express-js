@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Products</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            crossorigin="anonymous"
+        />
+        <link
+            href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="/stylesheets/styles.css" />¨
+        
+    </head>
+
+    <body>
+        <%- include('./partials/navbar.ejs', {user: user}) %>
+        <div class="container-fluid mt-5">
+            <% if (error) { %>
+                <h1 class="p-3 text-center"><%=error%></h1>
+            <% } else { %>
+            <h2 class="p-3 text-center">Products</h2>
+            <div class="list-group">
+                <div class="row px-3 py-1 w-100 me-auto">
+                    <span class="col py-1 bg-light">
+                        <label for="searchName">Name</label>
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="searchName"
+                                name="searchName"
+                            />
+                            <a id="a-searchName">
+                            <button class="btn btn-outline-secondary" onclick="searchByName()" type="button">Search</button>
+                            </a>
+                        </div>
+                    </span>
+                    <span class="col py-1 bg-light">
+                        <label for="categorySearch">categories</label>
+                        <div class="input-group">
+                            <select
+                                class="form-select"
+                                id="categorySearch"
+                                
+                            >
+                                <option selected>Choose...</option>
+                                <% categories?.forEach(function(category) { %>
+                                <option value="<%=category.categoryName%>">
+                                    <%=category.categoryName%>
+                                </option>
+                                <% }); %>
+                            </select>
+                            <a id="a-categorySearch">
+                            <button  class="btn btn-outline-secondary" type="button" onclick="searchByCategory()">Search</button>
+                            </a>
+                        </div>
+                    </span>
+                    <span class="col py-1 bg-light">
+                        <label for="brandSearch">brands</label>
+                        <div class="input-group">
+                            <select
+                                class="form-select"
+                                id="brandSearch"
+                            >
+                                <option selected>Choose...</option>
+                                <% brands?.forEach(function(brand) { %>
+                                <option value="<%=brand.brandName%>">
+                                    <%=brand.brandName%>
+                                </option>
+                                <% }); %>
+                            </select>
+                            <a id="a-brandSearch">
+                                <button class="btn btn-outline-secondary" type="button" onclick="searchByBrand()">Search</button>
+                            </a>
+                        </div>
+                    </span>
+
+                    <span class="col py-1 bg-light">
+                        <a href="/admin/products">
+                            <button class="btn btn-primary d-inline-block" style="margin-left: 60%; margin-top: 7%" type="button">Reset</button>
+                        </a>
+                    </span>
+                    <span class="col py-1 bg-light">
+                        <button id="modalButton" type="button" class="btn btn-primary d-inline-block" style="margin-left: 40%; margin-top: 7%" onclick="showModal()">
+                            Add product
+                        </button>
+                    </span>
+                </div>
+                <div class="row px-1 py-1 w-100">
+                    <span class="col py-1 bg-noroff text-center text-smaller"
+                        >Id</span
+                    >
+                    <span class="col py-1 bg-noroff text-center text-smaller"
+                        >Name</span
+                    >
+                    <span class="col-2 py-1 bg-noroff text-center text-smaller"
+                        >Description</span
+                    >
+                    <span class="col py-1 bg-noroff text-center text-smaller"
+                        >Quantity</span
+                    >
+                    <span class="col py-1 bg-noroff text-center text-smaller"
+                        >Price</span
+                    >
+                    <span class="col py-1 bg-noroff text-center text-smaller"
+                        >Brand</span
+                    >
+                    <span class="col py-1 bg-noroff text-center text-smaller"
+                        >Category</span
+                    >
+                    <span class="col-3 py-1 bg-noroff text-center text-smaller"
+                        >Image URL</span
+                    >
+                    <span class="col py-1 bg-noroff text-center text-smaller"
+                        >Image</span
+                    >
+                    <span class="col py-1 bg-noroff text-center text-smaller"
+                        >IsDeleted</span
+                    >
+                    <span class="col py-1 bg-noroff text-center text-smaller"
+                        >Created_At</span
+                    >
+                    <span class="col py-1 bg-noroff text-center text-smaller"
+                        >Updated_At</span
+                    >
+                    <span class="col py-1 bg-noroff text-center text-smaller"
+                        >Options</span
+                    >
+                </div>
+
+                <% products?.forEach(function(product) { %>
+                <div class="row px-1 py-1 w-100" id="<%=product.id%>">
+                    <span
+                        class="col px-0 text-center py-1 bg-light text-smaller border-start border-1"
+                    >
+                        <%=product.id%>
+                    </span>
+                    <span
+                        class="col py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                    >
+                        <%=product.name%>
+                    </span>
+                    <span
+                        class="col-2 py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                    >
+                        <%=product.description%>
+                    </span>
+                    <span
+                        class="col py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                    >
+                        <%=product.countInStock%>
+                    </span>
+                    <span
+                        class="col py-1 px-0 text-center bg-light text-smaller border-start border-1"
+                    >
+                        <%=product.price%>
+                    </span>
+                    <span
+                        class="col py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                    >
+                        <%=product.brandName%>
+                    </span>
+                    <span
+                        class="col py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                    >
+                        <%=product.categoryName%>
+                    </span>
+                    <span
+                        class="col-3 py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                    >
+                        <%=product.imgUrl%>
+                    </span>
+                    <span
+                        class="col py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                    >
+                        <img src="<%=product.imgUrl%>" class="w-100" alt="" />
+                    </span>
+                    <span
+                        class="col py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                    >
+                        <%=product.isDeleted%>
+                    </span>
+                    <span
+                        class="col py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                    >
+                        <%=product.createdAt%>
+                    </span>
+                    <span
+                        class="col py-1 bg-light px-0 text-center text-smaller border-start border-1"
+                    >
+                        <%=product.updatedAt%>
+                    </span>
+                    <span
+                        id="test"
+                        class="col bg-light px-0 text-center text-smaller border-start border-1"
+                    >
+                        <button
+                            type="button"
+                            onclick="deleteProduct(this)"
+                            class="d-block m-auto"
+                            
+                        >
+                            <i class="fa-solid fa-trash text-danger"></i>
+                        </button>
+                        <button
+                            type="button"
+                            onclick="showUpdateModal(this)"
+                            class="d-block m-auto"
+                            
+                        >
+                            <i class="fa-solid fa-pen text-warning"></i>
+                        </button>
+                    </span>
+                </div>
+                <% }); %>
+                <hr />
+            </div>
+        </div>
+        <% } %>
+        <!--
+            modal Product
+        -->
+        <div
+            class="modal fade"
+            id="productModal"
+            tabindex="-1"
+            aria-labelledby="productModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="productModalLabel">
+                            Add product
+                        </h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="productForm">
+                            <div class="mb-3">
+                                <label for="name" class="col-form-label"
+                                    >name:</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="name"
+                                    name="name"
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="col-form-label"
+                                    >description:</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="description"
+                                    name="description"
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="quantity" class="col-form-label"
+                                    >quantity:</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="quantity"
+                                    name="countInStock"
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="price" class="col-form-label"
+                                    >price:</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="price"
+                                    name="price"
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="brand" class="col-form-label"
+                                    >brand:</label
+                                >
+                                <select
+                                    id="brand"
+                                    name="brandName"
+                                    class="form-select"
+                                >
+                                    <% brands?.forEach(function(brand) { %>
+                                    <option value="<%=brand.brandName%>">
+                                        <%=brand.brandName%>
+                                    </option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="category" class="col-form-label"
+                                    >category:</label
+                                >
+                                <select
+                                    id="category"
+                                    name="categoryName"
+                                    class="form-select"
+                                >
+                                    <% categories?.forEach(function(category) { %>
+                                    <option value="<%=category.categoryName%>">
+                                        <%=category.categoryName%>
+                                    </option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="imgUrl" class="col-form-label"
+                                    >image-Url:</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="imgUrl"
+                                    name="imgUrl"
+                                />
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                        >
+                            Close
+                        </button>
+                        <button
+                            onclick="addProduct()"
+                            type="button"
+                            class="btn btn-primary"
+                        >
+                            Add product
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for updatedproduct -->
+
+        <div
+            class="modal fade"
+            id="updateProductModal"
+            tabindex="-1"
+            aria-labelledby="updateProductModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateProductModalLabel">
+                            update product
+                        </h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="updateForm">
+                            <div class="mb-3">
+                                <label for="u-name" class="col-form-label"
+                                    >name:</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="u-name"
+                                    name="name"
+                                />
+                            </div>
+
+                            <div class="mb-3">
+                                <label
+                                    for="u-description"
+                                    class="col-form-label"
+                                    >description:</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="u-description"
+                                    name="description"
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="u-quantity" class="col-form-label"
+                                    >quantity:</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="u-quantity"
+                                    name="countInStock"
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="u-price" class="col-form-label"
+                                    >price:</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="u-price"
+                                    name="price"
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="u-brand" class="col-form-label"
+                                    >brand:</label
+                                >
+                                <select
+                                    id="u-brand"
+                                    name="brandName"
+                                    class="form-select"
+                                >
+                                    <% brands?.forEach(function(brand) { %>
+                                    <option value="<%=brand.brandName%>">
+                                        <%=brand.brandName%>
+                                    </option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="u-category" class="col-form-label"
+                                    >category:</label
+                                >
+                                <select
+                                    id="u-category"
+                                    name="categoryName"
+                                    class="form-select"
+                                >
+                                    <% categories?.forEach(function(category) { %>
+                                    <option value="<%=category.categoryName%>">
+                                        <%=category.categoryName%>
+                                    </option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="u-imgUrl" class="col-form-label"
+                                    >image-Url:</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="u-imgUrl"
+                                    name="imgUrl"
+                                />
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                        >
+                            Close
+                        </button>
+                        <button
+                            onclick="updateProduct()"
+                            type="button"
+                            class="btn btn-primary"
+                        >
+                            Save changes
+                        </button>
+                        <button
+                            onclick="restoreProduct()"
+                            type="button"
+                            class="btn btn-primary"
+                        >
+                            restore product
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- modal error -->
+        <div
+            class="modal fade"
+            id="errorModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="modalTitleId"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitleId"></h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="messageBody" class="container-fluid"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            id="closeErrorButton"
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast -->
+        <div class="toast position-absolute bottom-0 end-0 p-3" data-bs-delay="3000" id="toast-number" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <strong class="me-auto">Number of items</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                <p><span id="numberOfFound"><%=number%></span> items found</p>
+            </div>
+          </div>
+       
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+        <script src="/js/products/products.js"></script>
+        <script src="/js/logout/handleLogout.js"></script>
+    </body>
+</html>
